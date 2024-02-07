@@ -6,6 +6,13 @@ public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed;
 
+    public Animator animator;
+
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +30,14 @@ public class PlayerMovement : MonoBehaviour
         moveInput.Normalize();
 
         transform.position += moveInput * moveSpeed * Time.deltaTime;
+        
+        if(moveInput != Vector3.zero)
+        {
+            animator.SetBool("Move", true);
+        }
+        else
+        {
+            animator.SetBool("Move", false);
+        }
     }
 }

@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public Rigidbody2D theRigidbody;
+
     public float moveSpeed;
 
     public Animator animator;
 
     private void Awake()
     {
+        theRigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
     }
 
@@ -20,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Vector3 moveInput = new Vector3(0f, 0f, 0f);
 
@@ -29,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
         moveInput.Normalize();
 
-        transform.position += moveInput * moveSpeed * Time.deltaTime;
+        theRigidbody.velocity = moveInput * moveSpeed;
         
         if(moveInput != Vector3.zero)
         {

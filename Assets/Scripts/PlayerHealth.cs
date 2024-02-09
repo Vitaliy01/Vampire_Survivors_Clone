@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -8,9 +9,14 @@ public class PlayerHealth : MonoBehaviour
 
     public float currentHealth, maxHealth;
 
+    public Slider healthSlider;
+
     private void Awake()
     {
         instance = this;
+
+        healthSlider.maxValue = maxHealth;
+        healthSlider.value = currentHealth;
     }
 
     // Start is called before the first frame update
@@ -33,5 +39,7 @@ public class PlayerHealth : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+
+        healthSlider.value = currentHealth;
     }
 }

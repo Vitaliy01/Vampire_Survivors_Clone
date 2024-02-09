@@ -12,10 +12,12 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         target = FindObjectOfType<PlayerMovement>().transform;
+
+        moveSpeed = Random.Range(0.7f, 1.4f);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         theRigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
     }

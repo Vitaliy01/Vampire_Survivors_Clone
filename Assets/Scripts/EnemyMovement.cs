@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     public Rigidbody2D theRigidbody;
-    public float moveSpeed;
+    public float moveSpeed, damage;
     private Transform target;
 
     // Start is called before the first frame update
@@ -20,5 +20,13 @@ public class EnemyMovement : MonoBehaviour
     void FixedUpdate()
     {
         theRigidbody.velocity = (target.position - transform.position).normalized * moveSpeed;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(PlayerHealth.instance.tag == "Player")
+        {
+            PlayerHealth.instance.TakeDamage(damage);
+        }
     }
 }

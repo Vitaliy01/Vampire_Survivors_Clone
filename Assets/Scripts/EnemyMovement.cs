@@ -6,15 +6,23 @@ public class EnemyMovement : MonoBehaviour
 {
     public Rigidbody2D theRigidbody;
     public float moveSpeed, damage;
+    private GameObject player;
     private Transform target;
 
     public float hitWaitTime = 0.5f;
     private float hitCounter;
 
+
+
     // Start is called before the first frame update
     void Start()
     {
-        target = FindObjectOfType<PlayerMovement>().transform;
+        player = GameObject.FindGameObjectWithTag("Player");
+
+        if (player != null)
+        {
+            target = player.GetComponent<Transform>();
+        }
 
         moveSpeed = Random.Range(moveSpeed * 0.8f, moveSpeed * 1.2f);
     }

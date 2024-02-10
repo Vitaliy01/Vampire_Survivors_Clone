@@ -16,7 +16,7 @@ public class EnemyMovement : MonoBehaviour
     {
         target = FindObjectOfType<PlayerMovement>().transform;
 
-        moveSpeed = Random.Range(0.7f, 1.4f);
+        moveSpeed = Random.Range(moveSpeed * 0.8f, moveSpeed * 1.2f);
     }
 
     // Update is called once per frame

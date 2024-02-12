@@ -16,6 +16,13 @@ public class EnemySpawner : MonoBehaviour
 
     private GameObject player;
 
+    private float despawnDistance;
+
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
+
+    public int checkPerFrame;
+    private int enemyToCheck;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +34,8 @@ public class EnemySpawner : MonoBehaviour
         {
             target = player.GetComponent<Transform>();
         }
+
+        despawnDistance = Vector3.Distance(transform.position, maxSpawn.position) + 4f;        
     }
 
     // Update is called once per frame
@@ -37,10 +46,45 @@ public class EnemySpawner : MonoBehaviour
         {
             spawnCounter = timeToSpawn;
 
-            Instantiate(enemyToSpawn, SelectSpawnPoint(), transform.rotation);
+            GameObject newEnemy = Instantiate(enemyToSpawn, SelectSpawnPoint(), transform.rotation);
+
+            spawnedEnemies.Add(newEnemy);
         }
 
         transform.position = target.position;
+
+        int checkTarget = enemyToCheck + checkPerFrame;
+
+        while (enemyToCheck < checkTarget)
+        {
+            if (enemyToCheck < spawnedEnemies.Count)
+            {
+                if (spawnedEnemies[enemyToCheck] != null)
+                {
+                    if (Vector3.Distance(transform.position, spawnedEnemies[enemyToCheck].transform.position) > despawnDistance)
+                    {
+                        Destroy(spawnedEnemies[enemyToCheck]);
+
+                        spawnedEnemies.RemoveAt(enemyToCheck);
+                        checkTarget--;
+                    }
+                    else
+                    {
+                        enemyToCheck++;
+                    }
+                }
+                else
+                {
+                    spawnedEnemies.RemoveAt(enemyToCheck);
+                    checkTarget--;
+                }
+            }
+            else
+            {
+                enemyToCheck = 0;
+                checkTarget = 0;
+            }
+        }
     }
 
     public Vector3 SelectSpawnPoint()

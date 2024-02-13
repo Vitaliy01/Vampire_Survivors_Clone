@@ -12,6 +12,8 @@ public class EnemyMovement : MonoBehaviour
     public float hitWaitTime = 0.5f;
     private float hitCounter;
 
+    public float health = 10f;
+
 
 
     // Start is called before the first frame update
@@ -55,5 +57,15 @@ public class EnemyMovement : MonoBehaviour
 
             hitCounter = hitWaitTime;
         }*/
+    }
+
+    public void TakeDamage(float damageToTake)
+    {
+        health -= damageToTake;
+
+        if(health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }

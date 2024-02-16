@@ -11,6 +11,8 @@ public class EnemyDamager : MonoBehaviour
 
     public bool destroyParent;
 
+    public bool shouldKnockBack;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,7 +48,7 @@ public class EnemyDamager : MonoBehaviour
     {
         if(collision.tag == "Enemy")
         {
-            collision.GetComponent<EnemyMovement>().TakeDamage(damageAmount);
+            collision.GetComponent<EnemyMovement>().TakeDamage(damageAmount, shouldKnockBack);
         }
     }
 }

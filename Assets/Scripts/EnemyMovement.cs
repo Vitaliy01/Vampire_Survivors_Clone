@@ -14,6 +14,9 @@ public class EnemyMovement : MonoBehaviour
 
     public float health = 10f;
 
+    public float knockBackTime = 0.5f;
+    private float knockBackCounter;
+
 
 
     // Start is called before the first frame update
@@ -27,6 +30,24 @@ public class EnemyMovement : MonoBehaviour
         }
 
         moveSpeed = Random.Range(moveSpeed * 0.8f, moveSpeed * 1.2f);
+    }
+
+    private void Update()
+    {
+        if(knockBackCounter > 0)
+        {
+            knockBackCounter -= Time.deltaTime;
+
+            if(moveSpeed > 0)
+            {
+                moveSpeed = -moveSpeed * 2f;
+            }
+
+            if(knockBackCounter <= 0)
+            {
+                moveSpeed = Mathf.Abs(moveSpeed * 0.5f);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -69,5 +90,15 @@ public class EnemyMovement : MonoBehaviour
         }
 
         DamageNumberController.instance.SpawnDamage(damageToTake, transform.position);
+    }
+
+    public void TakeDamage(float damageToTake, bool shouldKnockBack)
+    {
+        TakeDamage(damageToTake);
+
+        if (shouldKnockBack)
+        {
+            knockBackCounter = knockBackTime;
+        }
     }
 }

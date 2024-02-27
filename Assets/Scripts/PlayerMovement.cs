@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator animator;
 
-
+    public float pickupRange = 1.5f;
 
     private void Awake()
     {
